@@ -93,10 +93,10 @@ export default function ContentInputScreen(
   const isAdmin = role === 'ADMIN';
 
   return (
-    <div className="w-full h-full gap-4 bg-[#ffffff] flex justify-center flex-col pl-15 pr-15 pt-10 pb-10 items-center">
+    <div className="w-full h-full gap-4 bg-[#ffffff] dark:bg-gray-800 flex justify-center flex-col pl-15 pr-15 pt-10 pb-10 items-center">
       <section className={"w-full flex items-center justify-start"}>
-        <div className={"relative w-32 border border-[#5A5A5A] rounded-[0.325rem]"}>
-          <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)} className={"text-[#5A5A5A] appearance-none w-full pl-4 py-1  outline-none"}>
+        <div className={"relative w-32 border border-[#5A5A5A] dark:border-gray-600 rounded-[0.325rem]"}>
+          <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)} className={"text-[#5A5A5A] dark:text-gray-200 appearance-none w-full pl-4 py-1  outline-none bg-white dark:bg-gray-700"}>
             <option disabled hidden value={""}>카테고리</option>
             {isAdmin && <option value={"공지사항"}>공지사항</option>}
             <option value={"Q&A"}>Q&A</option>
@@ -108,13 +108,13 @@ export default function ContentInputScreen(
         </div>
       </section>
       <input
-        className={"w-full h-12 text-3xl font-semibold mb-4 outline-none"}
+        className={"w-full h-12 text-3xl font-semibold mb-4 outline-none dark:text-white dark:bg-gray-700"}
         placeholder={"제목을 입력해주세요"}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         spellCheck="false"
       />
-      <div className="w-full overflow-scroll flex justify-center border-y-[1.5px] border-[#838383]  select-none">
+      <div className="w-full overflow-scroll flex justify-center border-y-[1.5px] border-[#838383] dark:border-gray-600 select-none dark:bg-gray-700">
         <div className="flex">
           <div
             className="p-2 text-[18px] text-[#838383] flex justify-center items-center w-[50px] hover:bg-[#f3f3f3] hover:text-black hover:cursor-pointer"
@@ -207,7 +207,7 @@ export default function ContentInputScreen(
         </div>
       </div>
       <textarea
-        className={"w-full h-full resize-none outline-none"}
+        className={"w-full h-full resize-none outline-none dark:bg-gray-700 dark:text-white"}
         onKeyDown={(e) => handleDown(e)}
         placeholder={"내용을 입력해주세요"}
         value={content}

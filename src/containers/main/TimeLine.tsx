@@ -50,7 +50,7 @@ export default function NDIETimeline() {
   const entries = timelineData[selectedYear] || [];
 
   return (
-    <div className="text-black font-sans relative pl-8 md:pl-0">
+    <div className="text-black dark:text-white font-sans relative pl-8 md:pl-0">
       {/* 제목 */}
       <h1 className="text-2xl font-bold mb-12">
         엔디(<span className="text-[#FFA037] font-bold">NDIE</span>)의{" "}
@@ -60,21 +60,21 @@ export default function NDIETimeline() {
         {years.map((year, index) => (
           <React.Fragment key={year}>
             <button
-              className={`font-bold ${selectedYear === year ? "text-black" : "text-gray-400"
+              className={`font-bold ${selectedYear === year ? "text-black dark:text-white" : "text-gray-400"
                 }`}
               onClick={() => setSelectedYear(year)}
             >
               {year}
             </button>
             {index < years.length - 1 && (
-              <div className="w-12 h-px bg-gray-300" />
+              <div className="w-12 h-px bg-gray-300 dark:bg-gray-600" />
             )}
           </React.Fragment>
         ))}
       </div>
       <div className="relative pl-10">
-        <div className="absolute left-9 top-2 bottom-0 w-[2px] bg-gray-200 z-0" />
-        <div className="absolute -left-10 top-1 text-lg font-bold bg-[#F8F8F8] px-1 z-10">
+        <div className="absolute left-9 top-2 bottom-0 w-[2px] bg-gray-200 dark:bg-gray-700 z-0" />
+        <div className="absolute -left-10 top-1 text-lg font-bold bg-[#F8F8F8] dark:bg-gray-800 px-1 z-10">
           {selectedYear}
         </div>
         {entries.map((entry, index) => (
@@ -82,13 +82,13 @@ export default function NDIETimeline() {
             <div
               className={`absolute left-[-0.65rem] top-[0.35rem] w-3.5 h-3.5 rounded-full ${entry.type === "filled"
                   ? "bg-[#D1D5DB]"
-                  : "border-2 border-[#D1D5DB] bg-white"
+                  : "border-2 border-[#D1D5DB] bg-white dark:bg-gray-800"
                 }`}
             />
             <div className="text-[17px] font-bold mb-2">
               {entry.date} {entry.title}
             </div>
-            <p className="text-sm text-gray-600 whitespace-pre-line leading-relaxed">
+            <p className="text-sm text-gray-600 dark:text-gray-400 whitespace-pre-line leading-relaxed">
               {entry.description}
             </p>
           </div>

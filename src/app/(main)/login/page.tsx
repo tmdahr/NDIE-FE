@@ -101,27 +101,27 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
       <div className="w-full max-w-sm text-center space-y-6">
         <div className="flex justify-center -translate-y-1">
-          <Image src={Logo} alt="Logo" width={250} height={150} />
+          <Image src={Logo} alt="Logo" width={250} height={150} className="dark-logo" />
         </div>
 
         <button
-          className="relative flex cursor-pointer justify-center items-center w-full bg-white border border-gray-300 text-black font-bold py-2 rounded shadow-sm hover:bg-gray-50 disabled:opacity-50"
+          className="relative flex cursor-pointer justify-center items-center w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-black dark:text-white font-bold py-2 rounded shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
           onClick={handleGoogleLogin}
           disabled={isProcessing}
         >
-          <span className="absolute left-3 w-[30px] h-[30px] flex items-center justify-center rounded-full border border-gray-200 bg-white text-[#4285F4] font-black text-lg">
+          <span className="absolute left-3 w-[30px] h-[30px] flex items-center justify-center rounded-full border border-gray-200 bg-white dark:bg-gray-700 text-[#4285F4] font-black dark:font-bold text-lg">
             G
           </span>
           {isProcessing ? "로그인 중..." : "Google로 시작하기"}
         </button>
 
         <div className="flex items-center my-4">
-          <div className="flex-grow border-t border-gray-300" />
+          <div className="flex-grow border-t border-gray-300 dark:border-gray-600" />
           <span className="mx-4 text-gray-500 text-sm">또는</span>
-          <div className="flex-grow border-t border-gray-300" />
+          <div className="flex-grow border-t border-gray-300 dark:border-gray-600" />
         </div>
 
         <input
@@ -129,7 +129,7 @@ export default function Login() {
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full border border-gray-300 rounded px-4 py-2 mb-2"
+          className="w-full border border-gray-300 dark:border-gray-600 rounded px-4 py-2 mb-2 bg-white dark:bg-gray-800 text-black dark:text-white"
           onKeyDown={(e) => e.key === "Enter" && handleLogin()}
         />
         <input
@@ -137,7 +137,7 @@ export default function Login() {
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full border border-gray-300 rounded px-4 py-2"
+          className="w-full border border-gray-300 dark:border-gray-600 rounded px-4 py-2 bg-white dark:bg-gray-800 text-black dark:text-white"
           onKeyDown={(e) => e.key === "Enter" && handleLogin()}
         />
 
@@ -149,7 +149,7 @@ export default function Login() {
           {isProcessing ? "로그인 중..." : "로그인"}
         </button>
 
-        <div className="flex justify-between items-center text-sm text-gray-600 mt-2">
+        <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 mt-2">
           <label className="flex items-center">
             <input type="checkbox" className="cursor-pointer mr-2" />
             로그인 상태 유지

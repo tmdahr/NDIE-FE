@@ -12,7 +12,7 @@ export default function Modal({toggleModal, isOpen, children }: {
     <div onClick={toggleModal} className="w-screen fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
       <div
         onClick={(e)=>e.stopPropagation()}
-        className="w-[40%] min-h-[40%] modal-enter bg-white p-12 rounded-xl shadow-lg relative"
+        className="w-[40%] min-h-[40%] modal-enter bg-white dark:bg-gray-800 p-12 rounded-xl shadow-lg relative"
       >
         {children}
       </div>

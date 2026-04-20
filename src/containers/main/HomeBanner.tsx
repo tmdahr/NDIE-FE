@@ -43,27 +43,27 @@ export default function HomeBanner() {
   }, []);
 
   return (
-    <div className={`absolute top-1/2 -translate-y-1/2 z-1 bg-white/50 min-h-[30rem] md:h-[40rem] left-4 right-4 md:left-[10rem] md:right-[10rem] 
+    <div className={`absolute top-1/2 -translate-y-1/2 z-1 bg-white/50 dark:bg-gray-800/50 min-h-[30rem] md:h-[40rem] left-4 right-4 md:left-[10rem] md:right-[10rem] 
                      rounded-3xl md:rounded-4xl flex flex-col justify-center items-center text-center px-4 overflow-hidden py-8 md:py-0`}>
       <div className="z-10">
         <h1 className="text-xl sm:text-3xl md:text-4xl font-semibold mb-2 flex flex-col md:flex-row items-center md:items-end justify-center gap-2">
-          <p className="mb-2 md:mb-5 w-auto md:w-[10rem] text-center">{config.titlePrefix}</p>
+          <p className="mb-2 md:mb-5 w-auto md:w-[10rem] text-center dark:text-white">{config.titlePrefix}</p>
           <span
             className="font-extrabold text-6xl md:text-[8rem] align-bottom leading-none"
             style={{ color: config.highlightColor }}
           >
             {config.titleHighlight}
           </span>
-          <p className="mb-2 md:mb-5 w-auto md:w-[10rem] text-center">{config.titleSuffix}</p>
+          <p className="mb-2 md:mb-5 w-auto md:w-[10rem] text-center dark:text-white">{config.titleSuffix}</p>
         </h1>
-        <p className="text-gray-700 mt-4 whitespace-pre-line">
+        <p className="text-gray-700 dark:text-gray-200 mt-4 whitespace-pre-line">
           {config.descriptionKo}
         </p>
-        <div className="mt-10 text-sm sm:text-base text-black">
+        <div className="mt-10 text-sm sm:text-base text-black dark:text-white">
           <p className="font-semibold">
             we must <span className="font-bold" style={{ color: config.highlightColor }}>embrace</span>
           </p>
-          <p className="mt-1 text-gray-800 whitespace-pre-line">
+          <p className="mt-1 text-gray-800 dark:text-gray-200 whitespace-pre-line">
             {config.descriptionEn}
           </p>
         </div>

@@ -71,15 +71,15 @@ export default function InquiryForm() {
   return (
     // 전체 컨테이너 스타일 변경
     // 이미지에 맞춰 배경색 제거, 중앙 정렬, 상단 패딩 추가
-    <div className="absolute left-0 w-full h-full flex flex-col items-center bg-white px-4 md:px-40">
+    <div className="absolute left-0 w-full h-full flex flex-col items-center bg-white dark:bg-gray-900 px-4 md:px-40">
       <div className="w-full h-full px-8 py-12"> {/* 내부 컨테이너 */}
-        <h1 className="text-4xl font-bold mb-16 text-gray-800">문의하기</h1> {/* 제목 스타일 */}
+        <h1 className="text-4xl font-bold mb-16 text-gray-800 dark:text-white">문의하기</h1> {/* 제목 스타일 */}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-0 md:gap-x-20 gap-y-12 w-full">
           {/* 왼쪽 섹션: 이름, 단체 또는 기관명, 이메일 */}
           <div className="flex flex-col gap-10"> {/* 섹션 간격 조정 */}
             <div>
-              <label htmlFor="name" className="block text-xl font-medium text-gray-800 mb-4">
+              <label htmlFor="name" className="block text-xl font-medium text-gray-800 dark:text-white mb-4">
                 이름
               </label>
               <input
@@ -96,7 +96,7 @@ export default function InquiryForm() {
             </div>
 
             <div>
-              <label htmlFor="organization" className="block text-xl font-medium text-gray-800 mb-4">
+              <label htmlFor="organization" className="block text-xl font-medium text-gray-800 dark:text-white mb-4">
                 단체 또는 기관명
               </label>
               <input
@@ -106,12 +106,12 @@ export default function InquiryForm() {
                 value={formData.organization}
                 onChange={handleChange}
                 placeholder="단체 또는 기관명을 입력해주세요"
-                className="w-full pb-3 border-b border-gray-300 bg-transparent text-xl text-gray-700 placeholder-gray-400 focus:outline-none"
+                className="w-full pb-3 border-b border-gray-300 dark:border-gray-600 bg-transparent text-xl text-gray-700 dark:text-gray-200 placeholder-gray-400 focus:outline-none"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-xl font-medium text-gray-800 mb-4">
+              <label htmlFor="email" className="block text-xl font-medium text-gray-800 dark:text-white mb-4">
                 이메일
               </label>
               <input
@@ -121,7 +121,7 @@ export default function InquiryForm() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="보내는 분의 이메일을 입력해주세요"
-                className="w-full pb-3 border-b border-gray-300 bg-transparent text-xl text-gray-700 placeholder-gray-400 focus:outline-none"
+                className="w-full pb-3 border-b border-gray-300 dark:border-gray-600 bg-transparent text-xl text-gray-700 dark:text-gray-200 placeholder-gray-400 focus:outline-none"
                 required
               />
             </div>
@@ -130,7 +130,7 @@ export default function InquiryForm() {
           {/* 오른쪽 섹션: 태그, 내용 */}
           <div className="flex flex-col gap-10"> {/* 섹션 간격 조정 */}
             <div>
-              <label className="block text-xl font-medium text-gray-800 mb-4">
+              <label className="block text-xl font-medium text-gray-800 dark:text-white mb-4">
                 태그
               </label>
               <div className="flex space-x-3">
@@ -139,11 +139,10 @@ export default function InquiryForm() {
                     key={tag}
                     type="button"
                     onClick={() => handleTagClick(tag)}
-                    // 태그 버튼 스타일 변경: 회색 배경, 둥근 모서리, 선택 시 테두리
                     className={`px-6 py-2 rounded-full text-lg font-semibold transition-colors duration-200
                       ${formData.selectedTag === tag
-                        ? 'border border-gray-400 text-gray-800 bg-white' // 선택됨
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200' // 선택 안됨
+                        ? 'border border-gray-400 text-gray-800 dark:text-gray-800 bg-white' // 선택됨
+                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600' // 선택 안됨
                       }`}
                   >
                     {tag}
@@ -153,7 +152,7 @@ export default function InquiryForm() {
             </div>
 
             <div>
-              <label htmlFor="content" className="block text-xl font-medium text-gray-800 mb-4">
+              <label htmlFor="content" className="block text-xl font-medium text-gray-800 dark:text-white mb-4">
                 내용
               </label>
               <textarea
@@ -163,8 +162,7 @@ export default function InquiryForm() {
                 onChange={handleChange}
                 placeholder="문의할 내용을 입력해주세요"
                 rows={10}
-                // 텍스트 영역 스타일 변경: 테두리만, 배경 투명, 패딩 조정
-                className="w-full p-4 border border-gray-300 rounded-md bg-transparent text-xl text-gray-700 placeholder-gray-400 focus:outline-none resize-none"
+                className="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent text-xl text-gray-700 dark:text-gray-200 placeholder-gray-400 focus:outline-none resize-none"
                 required
               ></textarea>
             </div>
@@ -174,7 +172,7 @@ export default function InquiryForm() {
           <div className="col-span-1 md:col-span-2 flex justify-end"> {/* col-span-2로 폼 전체 너비 사용 */}
             <button
               type="submit"
-              className="px-8 py-3 bg-white text-orange-500 border border-orange-500 text-xl font-semibold rounded-md shadow-sm hover:bg-orange-500 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 flex items-center"
+              className="px-8 py-3 bg-white dark:bg-gray-800 text-orange-500 dark:text-orange-400 border border-orange-500 dark:border-orange-400 text-xl font-semibold rounded-md shadow-sm hover:bg-orange-500 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 flex items-center"
             >
               <svg className="w-6 h-6 mr-3 -ml-1 transform rotate-45" fill="currentColor" viewBox="0 0 20 20" style={{ transformOrigin: 'center' }}>
                 <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l.64-.213a1 1 0 00.108-.146l.75-1.5a1 1 0 00.08-.094l5-5a1 1 0 011.414 0l5 5a1 1 0 00.08.094l.75 1.5a1 1 0 00.108.146l.64.213a1 1 0 001.169-1.409l-7-14z"></path>
