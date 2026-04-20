@@ -8,7 +8,7 @@ type FooterButtonProps = {
 
 const FooterButton = ({children}:FooterButtonProps) => {
   return (
-    <button className="bg-white text-black px-4 py-3 rounded-md text-sm font-medium shadow-sm hover:shadow transition">
+    <button className="bg-white dark:bg-gray-800 text-black dark:text-white px-4 py-3 rounded-md text-sm font-medium shadow-sm hover:shadow transition">
       {children}
     </button>
   )
@@ -50,7 +50,7 @@ export const Footer = () => {
         </div>
 
         <div className="flex justify-start lg:justify-end">
-          <Image src={Logo} alt={"Logo"} className="h-auto w-32 sm:w-40 lg:w-48" />
+          <Image src={Logo} alt={"Logo"} className="h-auto w-32 sm:w-40 lg:w-48 dark-logo" />
         </div>
       </div>
     </footer>

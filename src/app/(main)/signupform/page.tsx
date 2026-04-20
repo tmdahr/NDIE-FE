@@ -88,14 +88,15 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto py-10 px-4">
+    <div className="max-w-md mx-auto py-10 px-4 dark:text-white">
+      <h1 className="text-2xl font-bold mb-6 text-center">회원가입</h1>
       <div className="space-y-4">
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           type="text"
           placeholder="이름을 입력해주세요"
-          className="w-full border px-4 py-2"
+          className="w-full border dark:border-gray-600 px-4 py-2 bg-white dark:bg-gray-800"
         />
 
         <div className="flex">
@@ -104,7 +105,7 @@ export default function SignupForm() {
             placeholder="이메일"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border px-4 py-2"
+            className="w-full border dark:border-gray-600 px-4 py-2 bg-white dark:bg-gray-800"
           />
         </div>
 
@@ -113,14 +114,14 @@ export default function SignupForm() {
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="비밀번호"
-          className="w-full border px-4 py-2"
+          className="w-full border dark:border-gray-600 px-4 py-2 bg-white dark:bg-gray-800"
         />
         <input
           value={repassword}
           onChange={(e) => setRePassword(e.target.value)}
           type="password"
           placeholder="비밀번호 확인"
-          className="w-full border px-4 py-2"
+          className="w-full border dark:border-gray-600 px-4 py-2 bg-white dark:bg-gray-800"
         />
 
         <div>
@@ -150,21 +151,21 @@ export default function SignupForm() {
         <div>
           <div className="font-medium mb-1">생년월일</div>
           <div className="flex space-x-2">
-            <select value={year} onChange={(e) => setYear(Number(e.target.value))} className="border px-2 py-1">
+            <select value={year} onChange={(e) => setYear(Number(e.target.value))} className="border dark:border-gray-600 px-2 py-1 bg-white dark:bg-gray-800">
               {generateYears().map((y) => (
                 <option key={y} value={y}>
                   {y}년
                 </option>
               ))}
             </select>
-            <select value={month} onChange={(e) => setMonth(Number(e.target.value))} className="border px-2 py-1">
+            <select value={month} onChange={(e) => setMonth(Number(e.target.value))} className="border dark:border-gray-600 px-2 py-1 bg-white dark:bg-gray-800">
               {generateMonths().map((m) => (
                 <option key={m} value={m}>
                   {m}월
                 </option>
               ))}
             </select>
-            <select value={day} onChange={(e) => setDay(Number(e.target.value))} className="border px-2 py-1">
+            <select value={day} onChange={(e) => setDay(Number(e.target.value))} className="border dark:border-gray-600 px-2 py-1 bg-white dark:bg-gray-800">
               {daysInMonth.map((d) => (
                 <option key={d} value={d}>
                   {d}일
@@ -179,7 +180,7 @@ export default function SignupForm() {
           onChange={(e) => setLocation(e.target.value)}
           type="text"
           placeholder="활동지역을 입력해주세요"
-          className="w-full border px-4 py-2"
+          className="w-full border dark:border-gray-600 px-4 py-2 bg-white dark:bg-gray-800"
         />
 
         <button

@@ -43,8 +43,8 @@ export function List({ name, data }: ListProps) {
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 pt-8 pb-12 md:gap-6 md:pb-16">
-      <p className="text-xl font-semibold md:text-2xl">{name}</p>
-      <hr className="border-[#CCCCCC] border-[1px] rounded-[5px]" />
+      <p className="text-xl font-semibold md:text-2xl dark:text-white">{name}</p>
+      <hr className="border-[#CCCCCC] dark:border-gray-700 border-[1px] rounded-[5px]" />
       <div className="w-full">
         <Listbox item={item} datas={data} name={name} />
       </div>

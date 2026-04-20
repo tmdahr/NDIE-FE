@@ -56,7 +56,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="dark:bg-gray-900">
       <ContentContainer>
         <Image src={Main} alt={"background"} className="absolute top-[-20px] z-0 left-0" />
         <HomeBanner />
@@ -67,7 +67,7 @@ export default function Home() {
           <span style={{ color: theme.primaryColor }}>{intro.highlightWord}</span> 소개
         </p>
         <Image src={A} alt="a" className="max-w-full h-auto" />
-        <p className="text-center font-semibold text-lg md:text-2xl whitespace-pre-line">
+        <p className="text-center font-semibold text-lg md:text-2xl whitespace-pre-line dark:text-white">
           {intro.description}
         </p>
         <Image src={B} alt="b" className="ml-auto max-w-full h-auto" />

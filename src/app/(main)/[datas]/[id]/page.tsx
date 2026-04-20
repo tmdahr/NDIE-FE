@@ -173,7 +173,7 @@ export default function DetailPage() {
           <p className="text-lg font-semibold text-orange-500">
             <Link href={backHref}>{name || "목록"}</Link>
           </p>
-          <hr className="border-[#CCCCCC] border-[1px] rounded-[5px]" />
+          <hr className="border-[#CCCCCC] dark:border-gray-700 border-[1px] rounded-[5px]" />
         </div>
 
         {name === '활동' ? (
@@ -181,7 +181,7 @@ export default function DetailPage() {
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
               {item.image && (
                 <div className="w-full lg:w-2/5">
-                  <div className="aspect-square w-full overflow-hidden rounded-xl bg-gray-50">
+                  <div className="aspect-square w-full overflow-hidden rounded-xl bg-gray-50 dark:bg-gray-800">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={item.image} alt="이미지" className="h-full w-full object-cover" />
                   </div>
@@ -189,11 +189,11 @@ export default function DetailPage() {
               )}
 
               <div className="flex flex-1 flex-col">
-                <h1 className="text-2xl font-bold">{item.title}</h1>
+                <h1 className="text-2xl font-bold dark:text-white">{item.title}</h1>
                 <p className="mt-1 text-sm text-gray-500">{formatDate(item.createdAt)}</p>
 
-                <hr className="my-4 border-[#EBEBEB]" />
-                <div className="rounded-xl border border-[#EAEAEA] bg-white p-4 text-base leading-relaxed">
+                <hr className="my-4 border-[#EBEBEB] dark:border-gray-700" />
+                <div className="rounded-xl border border-[#EAEAEA] dark:border-gray-700 bg-white dark:bg-gray-800 p-4 text-base leading-relaxed dark:text-gray-200">
                   {makeDocument(item.content)}
                 </div>
               </div>
@@ -202,14 +202,14 @@ export default function DetailPage() {
         ) : (
           <div className="flex flex-col gap-6">
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold break-words">{name === 'QnA' ? 'Q. ' : ''}{item.title}</h1>
+              <h1 className="text-2xl font-bold break-words dark:text-white">{name === 'QnA' ? 'Q. ' : ''}{item.title}</h1>
               <p className="text-sm text-gray-500">{formatDate(item.createdAt)}</p>
             </div>
-            <div className="rounded-xl border border-[#EAEAEA] bg-white p-4 text-base leading-relaxed">
+            <div className="rounded-xl border border-[#EAEAEA] dark:border-gray-700 bg-white dark:bg-gray-800 p-4 text-base leading-relaxed dark:text-gray-200">
               {makeDocument(item.content)}
             </div>
             {(name === 'QnA' || datas === 'QNA') && (comments?.comment || role === 'ROLE_ADMIN' || role === 'ADMIN') && (
-              <div className="flex flex-col gap-4 rounded-xl border border-[#EAEAEA] bg-white p-4">
+              <div className="flex flex-col gap-4 rounded-xl border border-[#EAEAEA] dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
                 {comments?.comment ? (
                   <div className="flex items-start gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FFD19C]">
@@ -217,19 +217,19 @@ export default function DetailPage() {
                         A
                       </div>
                     </div>
-                    <p className="text-sm leading-relaxed text-gray-800">{comments.comment}</p>
+                    <p className="text-sm leading-relaxed text-gray-800 dark:text-gray-200">{comments.comment}</p>
                   </div>
                 ) : isWritingComment ? (
                   <>
                     <textarea
-                      className="h-32 w-full resize-none rounded-lg border border-gray-300 p-3 text-sm focus:outline-none"
+                      className="h-32 w-full resize-none rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 p-3 text-sm focus:outline-none dark:text-white"
                       placeholder="답변을 입력하세요."
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
                     />
                     <div className="flex justify-end gap-2">
                       <button
-                        className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700"
+                        className="rounded-md border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
                         onClick={() => setIsWritingComment(false)}
                       >
                         취소
@@ -258,16 +258,16 @@ export default function DetailPage() {
         )}
       </div>
 
-      <div className="mt-8 flex w-full max-w-5xl flex-col gap-3 border-t border-[#EAEAEA] pt-4 md:mt-10 md:flex-row md:items-center md:justify-between">
+      <div className="mt-8 flex w-full max-w-5xl flex-col gap-3 border-t border-[#EAEAEA] dark:border-gray-700 pt-4 md:mt-10 md:flex-row md:items-center md:justify-between">
         {indexs?.prevId ? (
-          <Link href={`/${datas}/${indexs.prevId}`} className="text-sm text-gray-700 hover:text-orange-500">
+          <Link href={`/${datas}/${indexs.prevId}`} className="text-sm text-gray-700 dark:text-gray-300 hover:text-orange-500">
             이전글 - {indexs.prevTitle}
           </Link>
         ) : (
           <span className="text-sm text-gray-400">이전글이 없습니다</span>
         )}
         {indexs?.nextId ? (
-          <Link href={`/${datas}/${indexs.nextId}`} className="text-sm text-gray-700 hover:text-orange-500">
+          <Link href={`/${datas}/${indexs.nextId}`} className="text-sm text-gray-700 dark:text-gray-300 hover:text-orange-500">
             다음글 - {indexs.nextTitle}
           </Link>
         ) : (

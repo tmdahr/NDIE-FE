@@ -55,9 +55,9 @@ export default function NoticeContainer() {
   };
 
   return (
-    <div className="relative h-[11.25rem] w-full overflow-hidden border-t border-b border-[#EAEAEA] bg-white">
+    <div className="relative h-[11.25rem] w-full overflow-hidden border-t border-b border-[#EAEAEA] dark:border-gray-700 bg-white dark:bg-gray-800">
       <button
-        className={`${baseStyle} absolute left-0 top-0 h-full border-r border-[#EAEAEA] text-2xl z-10 disabled:text-gray-300 bg-white`}
+        className={`${baseStyle} absolute left-0 top-0 h-full border-r border-[#EAEAEA] dark:border-gray-700 text-2xl z-10 disabled:text-gray-300 bg-white dark:bg-gray-800`}
         onClick={() => handleSlide("prev")}
         disabled={isAnimating}
       >
@@ -79,7 +79,7 @@ export default function NoticeContainer() {
             >
               <p className="text-sm text-gray-400 mb-1">공지사항</p>
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-lg font-semibold text-black truncate max-w-[80%]">
+                <h3 className="text-lg font-semibold text-black dark:text-white truncate max-w-[80%]">
                   {notice.title}
                 </h3>
                 <span className="text-xs text-gray-400">
@@ -94,7 +94,7 @@ export default function NoticeContainer() {
         </div>
       </div>
       <button
-        className={`${baseStyle} absolute right-0 top-0 h-full border-l border-[#EAEAEA] text-2xl z-10 disabled:text-gray-300 bg-white`}
+        className={`${baseStyle} absolute right-0 top-0 h-full border-l border-[#EAEAEA] dark:border-gray-700 text-2xl z-10 disabled:text-gray-300 bg-white dark:bg-gray-800`}
         onClick={() => handleSlide("next")}
         disabled={isAnimating}
       >
