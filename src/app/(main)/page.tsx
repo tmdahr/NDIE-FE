@@ -58,7 +58,7 @@ export default function Home() {
   return (
     <div>
       <ContentContainer>
-        <Image src={Main} alt={"background"} className="absolute top-[-20px] z-0 left-0" />
+        <Image src={Main} alt={"background"} className="absolute top-[-20px] z-0 left-1/2 -translate-x-1/2" />
         <HomeBanner />
       </ContentContainer>
       <NoticeContainer />
