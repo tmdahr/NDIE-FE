@@ -1,10 +1,14 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Loading from '@/components/ui/loading';
+import { useToastStore } from '@/store/toast';
 import makeDocument from "@/util/makeDocument";
+import { DeleteQA } from '@/app/api/q&a';
+import { DeleteAnnouncement } from '@/app/api/announcement';
+import { DeleteActivity } from '@/app/api/activity';
 
 type IndexType = {
   prevId: string | null;
@@ -20,6 +24,7 @@ type CommentType = {
 export default function DetailPage() {
   const [commentText, setCommentText] = useState('');
   const [role, setRole] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [item, setItem] = useState<any>(null);
@@ -28,6 +33,7 @@ export default function DetailPage() {
   const [comments, setComments] = useState<CommentType | null>(null);
 
   const params = useParams();
+  const router = useRouter();
   const { datas, id } = params as { datas: string; id: string };
 
   const [name, setName] = useState('');
@@ -48,12 +54,14 @@ export default function DetailPage() {
 
       onAuthStateChanged(auth, async (user) => {
         if (user) {
+          setUserId(user.uid);
           const userDoc = await getDoc(doc(db, "users", user.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
             setRole(userData.role || 'USER'); // Assuming role is stored in user doc
           }
         } else {
+          setUserId(null);
           setRole(null);
         }
       });
@@ -157,10 +165,36 @@ export default function DetailPage() {
       setCommentText("");
       setIsWritingComment(false);
     } catch (e) {
-      console.error(e);
-      alert("댓글 작성 실패");
+      useToastStore.getState().addToast("댓글 작성에 실패했습니다.", "error");
     }
   }
+
+  const handleDelete = async () => {
+    if (!window.confirm("정말로 삭제하시겠습니까?")) return;
+
+    let result;
+    let redirectPath = "/";
+
+    if (datas === "QNA" || datas === "qna") {
+      result = await DeleteQA(id);
+      redirectPath = "/qna";
+    } else if (datas === "announcement") {
+      result = await DeleteAnnouncement(id);
+      redirectPath = "/announcement";
+    } else if (datas === "act" || datas === "activity") {
+      result = await DeleteActivity(id);
+      redirectPath = "/act";
+    }
+
+    if (result && result.status === 200) {
+      useToastStore.getState().addToast("성공적으로 삭제되었습니다.", "success");
+      router.push(redirectPath);
+    } else if (result) {
+      useToastStore.getState().addToast(result.message || "삭제에 실패했습니다.", "error");
+    } else {
+      useToastStore.getState().addToast("이 메뉴에서는 삭제 기능을 제공하지 않습니다.", "error");
+    }
+  };
 
   if (!item) return (
     <div className="flex justify-center items-center min-h-[95vh]">
@@ -193,7 +227,17 @@ export default function DetailPage() {
               )}
 
               <div className="flex flex-1 flex-col">
-                <h1 className="text-2xl font-bold">{item.title}</h1>
+                <div className="flex justify-between items-start">
+                  <h1 className="text-2xl font-bold">{item.title}</h1>
+                  {role === 'ADMIN' && (
+                    <button
+                      onClick={handleDelete}
+                      className="px-3 py-1 bg-red-50 text-red-500 border border-red-200 rounded hover:bg-red-100 transition-colors text-sm font-medium whitespace-nowrap"
+                    >
+                      삭제
+                    </button>
+                  )}
+                </div>
                 <p className="mt-1 text-sm text-gray-500">{formatDate(item.createdAt)}</p>
 
                 <hr className="my-4 border-[#EBEBEB]" />
@@ -205,9 +249,19 @@ export default function DetailPage() {
           </div>
         ) : (
           <div className="flex flex-col gap-6">
-            <div className="space-y-1">
-              <h1 className="text-2xl font-bold break-words">{name === 'QnA' ? 'Q. ' : ''}{item.title}</h1>
-              <p className="text-sm text-gray-500">{formatDate(item.createdAt)}</p>
+            <div className="flex justify-between items-start">
+              <div className="space-y-1">
+                <h1 className="text-2xl font-bold break-words">{name === 'QnA' ? 'Q. ' : ''}{item.title}</h1>
+                <p className="text-sm text-gray-500">{formatDate(item.createdAt)}</p>
+              </div>
+              {(role === 'ADMIN' || (userId === item.uid && (name === 'QnA' || datas === 'QNA'))) && (
+                <button
+                  onClick={handleDelete}
+                  className="px-3 py-1 bg-red-50 text-red-500 border border-red-200 rounded hover:bg-red-100 transition-colors text-sm font-medium whitespace-nowrap"
+                >
+                  삭제
+                </button>
+              )}
             </div>
             <div className="rounded-xl border border-[#EAEAEA] bg-white p-4 text-base leading-relaxed">
               {makeDocument(item.content)}
