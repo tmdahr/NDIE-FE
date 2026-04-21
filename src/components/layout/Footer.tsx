@@ -1,16 +1,18 @@
 import Image from "next/image";
 import Logo from "@public/images/logo.svg"
 import React from "react";
+import Link from "next/link";
 
 type FooterButtonProps = {
   children: React.ReactNode;
+  href: string;
 };
 
-const FooterButton = ({children}:FooterButtonProps) => {
+const FooterButton = ({children, href}: FooterButtonProps) => {
   return (
-    <button className="bg-white text-black px-4 py-3 rounded-md text-sm font-medium shadow-sm hover:shadow transition">
+    <Link href={href} target="_blank" rel="noopener noreferrer" className="bg-white text-black px-4 py-3 rounded-md text-sm font-medium shadow-sm hover:shadow transition">
       {children}
-    </button>
+    </Link>
   )
 }
 
@@ -26,9 +28,9 @@ export const Footer = () => {
           </ul>
 
           <div className="flex flex-wrap gap-3 sm:gap-4">
-            <FooterButton>국세청</FooterButton>
-            <FooterButton>국민권익위원회</FooterButton>
-            <FooterButton>서울시교육청</FooterButton>
+            <FooterButton href="https://www.nts.go.kr">국세청</FooterButton>
+            <FooterButton href="https://www.acrc.go.kr">국민권익위원회</FooterButton>
+            <FooterButton href="https://www.sen.go.kr">서울시교육청</FooterButton>
           </div>
 
           <ul className="flex flex-wrap gap-3 text-sm">
