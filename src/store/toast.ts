@@ -16,18 +16,24 @@ interface ToastStore {
 
 export const useToastStore = create<ToastStore>((set) => ({
   toasts: [],
-  addToast: (message, type = 'info') => {
+  addToast: (message, type = 'success') => { // 기본값 결정 필요 (success vs info)
     const id = Math.random().toString(36).substring(2, 9);
+    const newToast = { id, message, type };
+    
     set((state) => ({
-      toasts: [...state.toasts, { id, message, type }]
+      toasts: [...state.toasts, newToast],
     }));
+
+    // 3초 후 자동으로 삭제 (사용자 경험상 3초가 쾌적합니다)
     setTimeout(() => {
       set((state) => ({
-        toasts: state.toasts.filter((t) => t.id !== id)
+        toasts: state.toasts.filter((t) => t.id !== id),
       }));
-    }, 5000);
+    }, 3000);
   },
-  removeToast: (id) => set((state) => ({
-    toasts: state.toasts.filter((t) => t.id !== id)
-  }))
+  removeToast: (id) =>
+    set((state) => ({
+      toasts: state.toasts.filter((t) => t.id !== id),
+    })),
+}));
 }));

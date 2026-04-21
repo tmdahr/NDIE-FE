@@ -26,12 +26,23 @@ export function List({ name, data }: ListProps) {
         if (!db) return;
 
         const querySnapshot = await getDocs(collection(db, data));
-        const items = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        const docsArray = querySnapshot.docs;
+        const items = docsArray.map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            createdAt: data.createdAt || null
+          };
+        });
+        
+        const sortedItems = items.sort((a: { createdAt: string | null }, b: { createdAt: string | null }) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setitem(items as any);
+        setitem(sortedItems as any);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
