@@ -337,41 +337,24 @@ export default function OrgChartEditor() {
         {hasChildren && (
           <div className="flex flex-col items-center">
             {/* 부모에서 내려오는 수직선 */}
-            <svg width="2" height="20" className="overflow-visible">
-              <line x1="1" y1="0" x2="1" y2="20" stroke="#9CA3AF" strokeWidth="2" />
-            </svg>
+            <div className="w-[2px] h-[16px] bg-gray-400" />
 
             {/* 자식들 컨테이너 */}
-            <div className="relative">
-              {/* 수평 연결선 (SVG) */}
-              {node.child!.length > 1 && (
-                <svg 
-                  className="absolute top-0 left-0 w-full overflow-visible" 
-                  height="2"
-                  style={{ transform: 'translateY(-1px)' }}
-                >
-                  <line 
-                    x1="50" 
-                    y1="1" 
-                    x2={`calc(100% - 50px)`}
-                    y2="1" 
-                    stroke="#9CA3AF" 
-                    strokeWidth="2"
-                  />
-                </svg>
-              )}
-
-              <div className="flex gap-6">
-                {node.child!.map((child, idx) => (
-                  <div key={idx} className="flex flex-col items-center">
-                    {/* 각 자식으로 내려가는 수직선 */}
-                    <svg width="2" height="20" className="overflow-visible">
-                      <line x1="1" y1="0" x2="1" y2="20" stroke="#9CA3AF" strokeWidth="2" />
-                    </svg>
-                    {renderNode(child, [...path, idx])}
-                  </div>
-                ))}
-              </div>
+            <div className={`relative flex ${node.level === 2 ? 'flex-col' : 'items-start'}`}>
+              {node.child!.map((child, idx) => (
+                <div key={idx} className={`flex flex-col items-center relative ${node.level === 2 ? '' : 'px-3'}`}>
+                  {/* 수평 연결선 (양 옆으로 뻗어나감, 첫/마지막 노드는 반쪽만 연결) */}
+                  {node.level !== 2 && node.child!.length > 1 && (
+                    <div className="absolute top-0 left-0 w-full flex h-[2px]">
+                      <div className={`flex-1 ${idx === 0 ? '' : 'border-t-2 border-gray-400'}`} />
+                      <div className={`flex-1 ${idx === node.child!.length - 1 ? '' : 'border-t-2 border-gray-400'}`} />
+                    </div>
+                  )}
+                  {/* 각 자식으로 내려가는 수직선 */}
+                  {(node.level !== 2 || idx > 0) && <div className="w-[2px] h-[16px] bg-gray-400" />}
+                  {renderNode(child, [...path, idx])}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -395,7 +378,7 @@ export default function OrgChartEditor() {
       </div>
 
       <div 
-        className="flex justify-center py-8 overflow-auto min-h-[400px]"
+        className="flex justify-center items-start py-4 overflow-auto min-h-[300px]"
         onClick={() => setSelectedPath(null)}
       >
         {renderNode(data)}
