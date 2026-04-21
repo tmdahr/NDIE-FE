@@ -41,8 +41,12 @@ export const Footer = () => {
           </ul>
 
           <ul className="flex flex-wrap gap-6 text-sm">
-            <li>이용약관</li>
-            <li>개인정보처리방침</li>
+            <li>
+              <Link href="/terms" className="hover:underline">이용약관</Link>
+            </li>
+            <li>
+              <Link href="/privacy" className="hover:underline">개인정보처리방침</Link>
+            </li>
           </ul>
 
           <div className="space-y-1 text-sm">
