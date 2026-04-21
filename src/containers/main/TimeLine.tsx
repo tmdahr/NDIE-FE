@@ -61,7 +61,14 @@ export default function NDIETimeline() {
   }, [timelineData, selectedYear]);
 
   const years = Object.keys(timelineData).sort();
-  const entries = timelineData[selectedYear] || [];
+  const entries = (timelineData[selectedYear] || [])
+    .sort((a, b) => {
+      const parseDate = (dateStr: string, year: string) => {
+        const [month, day] = dateStr.split('.').map(Number);
+        return new Date(parseInt(year), month - 1, day).getTime();
+      };
+      return parseDate(b.date, selectedYear) - parseDate(a.date, selectedYear);
+    });
 
   return (
     <div className="text-black font-sans relative pl-8 md:pl-0">
