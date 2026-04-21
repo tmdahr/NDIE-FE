@@ -25,7 +25,7 @@ const defaultData: TimelineData = {
 
 export default function NDIETimeline() {
   const [timelineData, setTimelineData] = useState<TimelineData>(defaultData);
-  const [selectedYear, setSelectedYear] = useState("2024");
+  const [selectedYear, setSelectedYear] = useState("");
 
   useEffect(() => {
     const loadData = async () => {
@@ -37,7 +37,12 @@ export default function NDIETimeline() {
         const docRef = doc(db, "history", "timeline");
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setTimelineData(docSnap.data() as TimelineData);
+          const data = docSnap.data() as TimelineData;
+          setTimelineData(data);
+          const sortedYears = Object.keys(data).sort();
+          if (sortedYears.length > 0) {
+            setSelectedYear(sortedYears[0]);
+          }
         }
       } catch (e) {
         console.error("연혁 로드 실패:", e);
@@ -45,6 +50,15 @@ export default function NDIETimeline() {
     };
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (!selectedYear && timelineData) {
+      const sortedYears = Object.keys(timelineData).sort();
+      if (sortedYears.length > 0) {
+        setSelectedYear(sortedYears[0]);
+      }
+    }
+  }, [timelineData, selectedYear]);
 
   const years = Object.keys(timelineData).sort();
   const entries = timelineData[selectedYear] || [];
