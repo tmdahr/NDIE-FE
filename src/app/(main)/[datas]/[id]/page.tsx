@@ -92,13 +92,17 @@ export default function DetailPage() {
           const data = docSnap.data();
           setItem({ id: docSnap.id, ...data });
 
-          // Fetch Comments (Answer)
-          if (data.answer) {
-            // Assuming answer field exists in the doc directly or in 'comment' field
-            // Based on legacy logic, it updates 'comment' field.
-          }
           if (data.comment) {
             setComments({ comment: data.comment });
+          }
+
+          // 조회수 증가 (매번 1씩 증가)
+          try {
+            const currentViews = data.views || 0;
+            const { updateDoc } = await import("firebase/firestore");
+            await updateDoc(docRef, { views: currentViews + 1 });
+          } catch (err) {
+            console.log('조회수 증가 실패', err);
           }
 
           // Fetch Prev/Next
