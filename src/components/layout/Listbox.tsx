@@ -4,6 +4,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Loading from '@/components/ui/loading';
+import Pagination from '@/components/ui/Pagination';
 
 type ListItem = {
   id: string | number;
@@ -24,11 +25,14 @@ export default function Listbox({ item, datas, name }: ListboxProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredItems, setFilteredItems] = useState<ListItem[]>(item);
   const [hasSearched, setHasSearched] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleSearch = () => {
     setHasSearched(true);
     const filtered = item.filter((i) => i.title.toLowerCase().includes(searchTerm.toLowerCase()));
     setFilteredItems(filtered);
+    setCurrentPage(1); // 검색 시 1페이지로 리셋
   };
 
   function formatDate(dateStr: string) {
@@ -43,8 +47,10 @@ export default function Listbox({ item, datas, name }: ListboxProps) {
     if (searchTerm.trim() === '') {
       setFilteredItems(item);
       setHasSearched(false);
+      setCurrentPage(1);
     } else if (hasSearched) {
       setFilteredItems(item.filter((i) => i.title.toLowerCase().includes(searchTerm.toLowerCase())));
+      setCurrentPage(1);
     }
   }, [searchTerm, item, hasSearched]);
 
@@ -60,6 +66,10 @@ export default function Listbox({ item, datas, name }: ListboxProps) {
   };
 
   const hasResults = Array.isArray(filteredItems) && filteredItems.length > 0;
+
+  // 페이지네이션을 위한 데이터 슬라이싱
+  const offset = (currentPage - 1) * itemsPerPage;
+  const paginatedItems = filteredItems.slice(offset, offset + itemsPerPage);
 
   return (
     <div className="w-full">
@@ -96,13 +106,13 @@ export default function Listbox({ item, datas, name }: ListboxProps) {
 
           <div className="hidden md:block">
             {hasResults ? (
-              filteredItems.map((i, index) => (
+              paginatedItems.map((i, index) => (
                 <div
                   key={i.id}
                   className="grid grid-cols-5 cursor-pointer items-center border-b border-gray-200 py-3 text-center text-sm hover:bg-gray-50"
                   onClick={() => deslist(i.id)}
                 >
-                  <p>{filteredItems.length - index}</p>
+                  <p>{filteredItems.length - (offset + index)}</p>
                   <p className="truncate">{i.title}</p>
                   <p>{i.username || '관리자'}</p>
                   <p>{formatDate(i.createdAt)}</p>
@@ -116,14 +126,14 @@ export default function Listbox({ item, datas, name }: ListboxProps) {
 
           <div className="flex flex-col divide-y divide-gray-200 md:hidden">
             {hasResults ? (
-              filteredItems.map((i, index) => (
+              paginatedItems.map((i, index) => (
                 <button
                   key={i.id}
                   className="flex flex-col items-start gap-2 py-3 text-left"
                   onClick={() => deslist(i.id)}
                 >
                   <div className="flex w-full items-center justify-between gap-3">
-                    <span className="text-xs text-gray-500">#{filteredItems.length - index}</span>
+                    <span className="text-xs text-gray-500">#{filteredItems.length - (offset + index)}</span>
                     <span className="text-xs text-gray-400">{formatDate(i.createdAt)}</span>
                   </div>
                   <p className="w-full text-base font-semibold text-black">{i.title}</p>
@@ -137,6 +147,13 @@ export default function Listbox({ item, datas, name }: ListboxProps) {
               <div className="py-6 text-center text-gray-500">검색 결과가 없습니다.</div>
             )}
           </div>
+
+          <Pagination
+            totalItems={filteredItems.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
         </>
       ) : hasSearched ? (
         <div className="py-4 text-center text-gray-500">검색 결과가 없습니다.</div>
