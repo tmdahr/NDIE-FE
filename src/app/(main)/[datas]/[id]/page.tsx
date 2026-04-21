@@ -7,6 +7,8 @@ import Loading from '@/components/ui/loading';
 import { useToastStore } from '@/store/toast';
 import makeDocument from "@/util/makeDocument";
 import { DeleteQA } from '@/app/api/q&a';
+import { DeleteAnnouncement } from '@/app/api/announcement';
+import { DeleteActivity } from '@/app/api/activity';
 
 type IndexType = {
   prevId: string | null;
@@ -166,14 +168,25 @@ export default function DetailPage() {
   const handleDelete = async () => {
     if (!window.confirm("정말로 삭제하시겠습니까?")) return;
 
+    let result;
+    let redirectPath = "/";
+
     if (datas === "QNA" || datas === "qna") {
-      const result = await DeleteQA(id);
-      if (result.status === 200) {
-        useToastStore.getState().addToast("성공적으로 삭제되었습니다.", "success");
-        router.push("/qna");
-      } else {
-        useToastStore.getState().addToast(result.message || "삭제에 실패했습니다.", "error");
-      }
+      result = await DeleteQA(id);
+      redirectPath = "/qna";
+    } else if (datas === "announcement") {
+      result = await DeleteAnnouncement(id);
+      redirectPath = "/announcement";
+    } else if (datas === "act" || datas === "activity") {
+      result = await DeleteActivity(id);
+      redirectPath = "/act";
+    }
+
+    if (result && result.status === 200) {
+      useToastStore.getState().addToast("성공적으로 삭제되었습니다.", "success");
+      router.push(redirectPath);
+    } else if (result) {
+      useToastStore.getState().addToast(result.message || "삭제에 실패했습니다.", "error");
     } else {
       useToastStore.getState().addToast("이 메뉴에서는 삭제 기능을 제공하지 않습니다.", "error");
     }
@@ -210,7 +223,17 @@ export default function DetailPage() {
               )}
 
               <div className="flex flex-1 flex-col">
-                <h1 className="text-2xl font-bold">{item.title}</h1>
+                <div className="flex justify-between items-start">
+                  <h1 className="text-2xl font-bold">{item.title}</h1>
+                  {role === 'ADMIN' && (
+                    <button
+                      onClick={handleDelete}
+                      className="px-3 py-1 bg-red-50 text-red-500 border border-red-200 rounded hover:bg-red-100 transition-colors text-sm font-medium whitespace-nowrap"
+                    >
+                      삭제
+                    </button>
+                  )}
+                </div>
                 <p className="mt-1 text-sm text-gray-500">{formatDate(item.createdAt)}</p>
 
                 <hr className="my-4 border-[#EBEBEB]" />
@@ -227,7 +250,7 @@ export default function DetailPage() {
                 <h1 className="text-2xl font-bold break-words">{name === 'QnA' ? 'Q. ' : ''}{item.title}</h1>
                 <p className="text-sm text-gray-500">{formatDate(item.createdAt)}</p>
               </div>
-              {(name === 'QnA' || datas === 'QNA') && (role === 'ADMIN' || userId === item.uid) && (
+              {(role === 'ADMIN' || (userId === item.uid && (name === 'QnA' || datas === 'QNA'))) && (
                 <button
                   onClick={handleDelete}
                   className="px-3 py-1 bg-red-50 text-red-500 border border-red-200 rounded hover:bg-red-100 transition-colors text-sm font-medium whitespace-nowrap"
