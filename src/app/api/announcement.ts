@@ -68,3 +68,24 @@ export const CreateAnnouncement = async (data: { title: string, content: string 
     return { status: 500 as const, message };
   }
 };
+
+export const DeleteAnnouncement = async (id: string) => {
+  try {
+    const db = await getFirebaseDb();
+    if (!db) {
+      return { status: 500, message: 'Firebase가 초기화되지 않았습니다.' };
+    }
+
+    const { doc, deleteDoc } = await import("firebase/firestore");
+    await deleteDoc(doc(db, "announcement", id));
+    
+    return { status: 200 };
+  } catch (e: any) {
+    console.error('[DeleteAnnouncement] 오류:', e);
+    let message = '공지사항 삭제에 실패했습니다.';
+    if (e.code === 'permission-denied') {
+      message = '삭제 권한이 없습니다.';
+    }
+    return { status: 500, message };
+  }
+};

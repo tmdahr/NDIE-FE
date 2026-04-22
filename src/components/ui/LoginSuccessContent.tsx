@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import { useToastStore } from "@/store/toast";
+
 export default function LoginSuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,7 +46,7 @@ export default function LoginSuccessContent() {
         // Firebase Auth로 로그인 처리 (AuthProvider가 자동 감지)
         router.push("/");
       } catch (error) {
-        alert(error instanceof Error ? error.message : "로그인 중 오류 발생");
+        useToastStore.getState().addToast(error instanceof Error ? error.message : "로그인 중 오류 발생", "error");
       }
     };
     verifyLogin();
