@@ -340,18 +340,18 @@ export default function OrgChartEditor() {
             <div className="w-[2px] h-[16px] bg-gray-400" />
 
             {/* 자식들 컨테이너 */}
-            <div className={`relative flex ${node.level === 2 ? 'flex-col' : 'items-start'}`}>
+            <div className="relative flex items-start">
               {node.child!.map((child, idx) => (
-                <div key={idx} className={`flex flex-col items-center relative ${node.level === 2 ? '' : 'px-3'}`}>
+                <div key={idx} className="flex flex-col items-center relative px-3">
                   {/* 수평 연결선 (양 옆으로 뻗어나감, 첫/마지막 노드는 반쪽만 연결) */}
-                  {node.level !== 2 && node.child!.length > 1 && (
+                  {node.child!.length > 1 && (
                     <div className="absolute top-0 left-0 w-full flex h-[2px]">
                       <div className={`flex-1 ${idx === 0 ? '' : 'border-t-2 border-gray-400'}`} />
                       <div className={`flex-1 ${idx === node.child!.length - 1 ? '' : 'border-t-2 border-gray-400'}`} />
                     </div>
                   )}
                   {/* 각 자식으로 내려가는 수직선 */}
-                  {(node.level !== 2 || idx > 0) && <div className="w-[2px] h-[16px] bg-gray-400" />}
+                  <div className="w-[2px] h-[16px] bg-gray-400" />
                   {renderNode(child, [...path, idx])}
                 </div>
               ))}

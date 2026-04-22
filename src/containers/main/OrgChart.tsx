@@ -78,18 +78,18 @@ const OrgNodeComponent = ({ node }: orgNodeComponentProps) => {
           <div className="w-[2px] h-[16px] bg-gray-400" />
 
           {/* 자식들 컨테이너 */}
-          <div className={`relative flex ${node.level == 2 ? 'flex-col' : 'items-start'}`}>
+          <div className="relative flex items-start">
             {node.child!.map((child: OrgNode, index) => (
-              <div key={index} className={`flex flex-col items-center relative ${node.level == 2 ? '' : 'px-3'}`}>
+              <div key={index} className="flex flex-col items-center relative px-3">
                 {/* 수평 연결선 */}
-                {node.level !== 2 && node.child!.length > 1 && (
+                {node.child!.length > 1 && (
                   <div className="absolute top-0 left-0 w-full flex h-[2px]">
                     <div className={`flex-1 ${index === 0 ? '' : 'border-t-2 border-gray-400'}`} />
                     <div className={`flex-1 ${index === node.child!.length - 1 ? '' : 'border-t-2 border-gray-400'}`} />
                   </div>
                 )}
                 {/* 각 자식으로 내려가는 수직선 */}
-                {(node.level !== 2 || index > 0) && <div className="w-[2px] h-[16px] bg-gray-400" />}
+                <div className="w-[2px] h-[16px] bg-gray-400" />
                 
                 <OrgNodeComponent node={child} />
               </div>
