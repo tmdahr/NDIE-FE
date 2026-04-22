@@ -115,14 +115,19 @@ export default function DetailPage() {
 
           // Fetch Prev/Next
           if (data.createdAt) {
+            const { getFirebaseDb } = await import("@/lib/firebase");
+            const db = await getFirebaseDb();
+            if (!db) return;
+            const collectionName = getCollectionName(datas);
             const colRef = collection(db, collectionName);
-            // Prev (Newer)
-            const prevQuery = query(colRef, orderBy("createdAt", "asc"), startAfter(data.createdAt), limit(1));
+
+            // 이전글 (Older): 현재 글보다 이전에 작성된 글 중 가장 최근 것
+            const prevQuery = query(colRef, orderBy("createdAt", "desc"), startAfter(docSnap), limit(1));
             const prevSnap = await getDocs(prevQuery);
             const prevdoc = prevSnap.empty ? null : prevSnap.docs[0];
 
-            // Next (Older)
-            const nextQuery = query(colRef, orderBy("createdAt", "desc"), startAfter(data.createdAt), limit(1));
+            // 다음글 (Newer): 현재 글보다 나중에 작성된 글 중 가장 오래된 것
+            const nextQuery = query(colRef, orderBy("createdAt", "asc"), startAfter(docSnap), limit(1));
             const nextSnap = await getDocs(nextQuery);
             const nextdoc = nextSnap.empty ? null : nextSnap.docs[0];
 
