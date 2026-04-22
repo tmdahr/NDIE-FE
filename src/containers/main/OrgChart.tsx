@@ -52,7 +52,7 @@ export default function OrgChart() {
     loadData();
   }, []);
   return (
-    <div className="flex flex-col items-center py-12 w-full overflow-x-auto">
+    <div className="flex flex-col items-center py-4 w-full overflow-x-auto">
       <div className="min-w-fit px-4">
         <OrgNodeComponent node={orgTreeData} />
       </div>
@@ -64,16 +64,39 @@ type orgNodeComponentProps = {
 }
 const OrgNodeComponent = ({ node }: orgNodeComponentProps) => {
 
+  const hasChildren = node.child && node.child.length > 0;
+
   return (
-    <div className="flex flex-col items-center gap-4 text-2xl">
-      <div className={`w-[12.5rem] h-[5rem] border-2 ${node.level == 0 ? "bg-[#ED9735] border-[#BD894D]" : node.level == 1 ? "bg-[#F4AA55] border-[#ED9735]" : node.level == 2 ? "bg-[#FCC07C] border-[#F4AA55]" : "bg-[#FFFFFF] border-[#FCC07C]"} flex justify-center items-center rounded-md`}>
+    <div className="flex flex-col items-center text-2xl">
+      <div className={`w-[12.5rem] h-[5rem] border-2 ${node.level == 0 ? "bg-[#ED9735] border-[#BD894D]" : node.level == 1 ? "bg-[#F4AA55] border-[#ED9735]" : node.level == 2 ? "bg-[#FCC07C] border-[#F4AA55]" : "bg-[#FFFFFF] border-[#FCC07C]"} flex justify-center items-center rounded-md font-semibold`}>
         {node.name}
       </div>
-      <div className={`flex ${node.level == 2 ? 'flex-col' : 'flex-row gap-6'}`}>
-        {node.child?.map((child: OrgNode, index) => {
-          return <OrgNodeComponent key={index} node={child} />
-        })}
-      </div>
+
+      {hasChildren && (
+        <div className="flex flex-col items-center">
+          {/* 부모에서 내려오는 수직선 */}
+          <div className="w-[2px] h-[16px] bg-gray-400" />
+
+          {/* 자식들 컨테이너 */}
+          <div className="relative flex items-start">
+            {node.child!.map((child: OrgNode, index) => (
+              <div key={index} className="flex flex-col items-center relative px-3">
+                {/* 수평 연결선 */}
+                {node.child!.length > 1 && (
+                  <div className="absolute top-0 left-0 w-full flex h-[2px]">
+                    <div className={`flex-1 ${index === 0 ? '' : 'border-t-2 border-gray-400'}`} />
+                    <div className={`flex-1 ${index === node.child!.length - 1 ? '' : 'border-t-2 border-gray-400'}`} />
+                  </div>
+                )}
+                {/* 각 자식으로 내려가는 수직선 */}
+                <div className="w-[2px] h-[16px] bg-gray-400" />
+                
+                <OrgNodeComponent node={child} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
