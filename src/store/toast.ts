@@ -19,7 +19,7 @@ export const useToastStore = create<ToastStore>((set) => ({
   addToast: (message, type = 'success') => { // 기본값 결정 필요 (success vs info)
     const id = Math.random().toString(36).substring(2, 9);
     const newToast = { id, message, type };
-    
+
     set((state) => ({
       toasts: [...state.toasts, newToast],
     }));
@@ -35,5 +35,4 @@ export const useToastStore = create<ToastStore>((set) => ({
     set((state) => ({
       toasts: state.toasts.filter((t) => t.id !== id),
     })),
-}));
 }));
