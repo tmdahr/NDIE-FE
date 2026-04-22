@@ -56,7 +56,9 @@ export const Footer = () => {
         </div>
 
         <div className="flex justify-start lg:justify-end">
-          <Image src={Logo} alt={"Logo"} className="h-auto w-32 sm:w-40 lg:w-48" />
+          <Link href="/">
+            <Image src={Logo} alt={"Logo"} className="h-auto w-32 sm:w-40 lg:w-48" style={{ filter: 'brightness(0) invert(1)' }} />
+          </Link>
         </div>
       </div>
     </footer>
